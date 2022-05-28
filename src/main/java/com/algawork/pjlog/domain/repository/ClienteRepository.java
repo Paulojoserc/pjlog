@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.algawork.pjlog.domain.model.Cliente;
 
 @Repository
-public interface ClienteResository extends JpaRepository<Cliente, Long> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 	List<Cliente> findByNome(String nome);
 	List<Cliente> findByNomeContaining(String nome);

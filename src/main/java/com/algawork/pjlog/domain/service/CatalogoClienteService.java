@@ -5,15 +5,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.algawork.pjlog.domain.exeception.NegocioException;
 import com.algawork.pjlog.domain.model.Cliente;
-import com.algawork.pjlog.domain.repository.ClienteResository;
+import com.algawork.pjlog.domain.repository.ClienteRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class CatalagoClienteService {
+public class CatalogoClienteService {
+	
+	private ClienteRepository clienteRepository;
 
-	private ClienteResository clienteRepository;
+	public Cliente buscar(Long clienteId) {
+		return clienteRepository.findById(clienteId)
+				.orElseThrow(() -> new NegocioException("Cliente não encontrado"));
+	}
 	
 	@Transactional
 	public Cliente salvar(Cliente cliente) {

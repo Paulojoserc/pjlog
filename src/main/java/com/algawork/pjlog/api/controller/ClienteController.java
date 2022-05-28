@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algawork.pjlog.domain.model.Cliente;
-import com.algawork.pjlog.domain.repository.ClienteResository;
-import com.algawork.pjlog.domain.service.CatalagoClienteService;
+import com.algawork.pjlog.domain.repository.ClienteRepository;
+import com.algawork.pjlog.domain.service.CatalogoClienteService;
 
 import lombok.AllArgsConstructor;
 
@@ -27,8 +27,8 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-	private ClienteResository clienteRepository;
-	private CatalagoClienteService catalagoClienteService;
+	private ClienteRepository clienteRepository;
+	private CatalogoClienteService catalagoClienteService;
 
 	@GetMapping
 	public List<Cliente> listar() {
