@@ -2,6 +2,7 @@ package com.algawork.pjlog.api.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algawork.pjlog.api.model.DestinatarioModel;
 import com.algawork.pjlog.api.model.EntregaModel;
 import com.algawork.pjlog.domain.model.Entrega;
 import com.algawork.pjlog.domain.repository.EntregaRepository;
@@ -27,6 +27,7 @@ public class EntregaController {
 
 	private EntregaRepository entregaRepository;
 	private SolicitacaoEntregaService solicitacaoEntregaService;
+	private ModelMapper modelMapper;
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -42,19 +43,7 @@ public class EntregaController {
 	@GetMapping("/{entregaId}")
 	public ResponseEntity<EntregaModel> buscar(@PathVariable Long entregaId){
 		return entregaRepository.findById(entregaId).map(entrega -> {
-			EntregaModel entregaModel = new EntregaModel();
-		entregaModel.setId(entrega.getId());
-		entregaModel.setNomeCliente(entrega.getCliente().getNome());
-		entregaModel.setDestinatario(new DestinatarioModel());
-		entregaModel.getDestinatario().setNome(entrega.getDestinatario().getNome());
-		entregaModel.getDestinatario().setLogradouro(entrega.getDestinatario().getLogradouro());
-		entregaModel.getDestinatario().setNumero(entrega.getDestinatario().getComplemento());
-		entregaModel.getDestinatario().setComplemento(entrega.getDestinatario().getComplemento());
-		entregaModel.getDestinatario().setBairro(entrega.getDestinatario().getBairro());
-		entregaModel.setTaxa(entrega.getTaxa());
-		entregaModel.setStatus(entrega.getStatus());
-		entregaModel.setDataPedido(entrega.getDataPedido());
-		entregaModel.setDataPedido(entrega.getDataFinalizacao());
+			EntregaModel entregaModel = modelMapper.map(entrega, EntregaModel.class);
 		
 		
 		return ResponseEntity.ok(entregaModel);
